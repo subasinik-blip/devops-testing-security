@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/AravindAmuthan-9600/devops-testing-security.git'
+                    url: 'https://github.com/subasinik-blip/devops-testing-security.git'
             }
         }
 
