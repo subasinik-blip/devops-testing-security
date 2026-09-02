@@ -1,3 +1,4 @@
+```groovy
 pipeline {
 
     agent any
@@ -31,7 +32,7 @@ pipeline {
             steps {
                 sh '''
                     ./venv/bin/pytest test_app.py
-                '''
+            '''
             }
         }
 
@@ -42,8 +43,7 @@ pipeline {
                         ${SONAR_SCANNER} \
                         -Dsonar.projectKey=devops-security-testing \
                         -Dsonar.projectName=devops-security-testing \
-                        -Dsonar.sources=. \
-                        -Dsonar.python.version=3.9
+                        -Dsonar.sources=.
                     '''
                 }
             }
@@ -123,3 +123,4 @@ pipeline {
         }
     }
 }
+```
