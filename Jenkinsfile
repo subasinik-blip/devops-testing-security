@@ -1,12 +1,11 @@
 ```groovy
 pipeline {
-
     agent any
 
     environment {
-        IMAGE_NAME = "devops-security-testing"
-        IMAGE_TAG  = "v1"
-        SONAR_SCANNER = "/opt/sonar-scanner/bin/sonar-scanner"
+        IMAGE_NAME = 'devops-security-testing'
+        IMAGE_TAG = 'v1'
+        SONAR_SCANNER = '/opt/sonar-scanner/bin/sonar-scanner'
     }
 
     stages {
@@ -32,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                     ./venv/bin/pytest test_app.py
-            '''
+                '''
             }
         }
 
@@ -52,8 +51,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                    docker build \
-                    -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
                 '''
             }
         }
@@ -61,6 +59,7 @@ pipeline {
         stage('Trivy Security Scan') {
             steps {
                 sh '''
+                    cd /tmp
                     trivy image \
                     --severity HIGH,CRITICAL \
                     --exit-code 1 \
@@ -100,7 +99,7 @@ pipeline {
                     -v "$PWD:/zap/wrk/:rw" \
                     zaproxy/zap-stable \
                     zap-baseline.py \
-                    -t http://host.docker.internal:5000 \
+                    -t http://localhost:5000 \
                     -r zap-report.html || true
                 '''
             }
